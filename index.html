@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #471396;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none; /* Add this to remove underline from logo */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 25px;
+            height: 20px;
+            z-index: 200; /* Ensure hamburger is above nav-links on mobile */
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hamburger animation */
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .btn-portfolio {
+            background-color: white !important;
+            color: #471396 !important;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none; /* Ensures the button is styled correctly */
+        }
+
+        .btn-portfolio:hover {
+            background-color: var(--primary);
+        }
+
+        /* Main Content Styles */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .hero p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-details {
+            padding: 1.5rem;
+        }
+
+        .project-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .project-details p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background-color: #e9ecef;
+            color: var(--dark);
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-link {
+            display: inline-block;
+            background-color: #471396 !important;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .project-link:hover {
+            background-color: var(--secondary);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive menu (mobile) */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color:#7965C1;
+                padding: 1rem 2rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-20px);
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: all 0.3s ease;
+                z-index: 100;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0; /* Add padding for better touch targets */
+                width: 100%; /* Make links take full width */
+            }
+
+            .btn-portfolio {
+                margin-top: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">MyProject</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#projects">Projects</a>
+                <a href="https://ahmadsanusi18.github.io/portofolio/" class="btn-portfolio">Ke Portofolio</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>My Project </h1>
+            <p>Beberapa Contoh Desain Project Yang Telah Saya Buat.</p>
+        </section>
+
+        <section class="projects" id="projects">
+            <h2 style="margin-bottom: 1.5rem; text-align: center;">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="img/madstore.png" alt="Modern e-commerce website with product listings in grid layout" class="project-image">
+                    <div class="project-details">
+                        <h3>Cashier App</h3>
+                        <p>Gambaran Aplikasi Kasir responsiv disemua device, untuk memudahkan para Kasir disebuah toko ataupun minimarket, coffeshop ataupun lainnya.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Laravel</span>
+                            <span class="project-tag">PHP</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Mysql</span>
+                        </div>
+                        <a href="https://ahmadsanusi18.github.io/Kasir-HTML/" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/absensi.png" alt="Mobile app dashboard with analytics charts and metrics" class="project-image">
+                    <div class="project-details">
+                        <h3>Web Absensi</h3>
+                        <p>Gambaran Website yang dirancang untuk mengabsensi mahasiswa dan mengabsensi dosen lengkap dengan rekapannya.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Laravel</span>
+                            <span class="project-tag">PHP</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Mysql</span>
+                        </div>
+                        <a href="https://ahmadsanusi18.github.io/absensi-HTML/" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="img/pkm.png" alt="Social media interface with user profiles and timeline" class="project-image">
+                    <div class="project-details">
+                        <h3>Web Anatomy</h3>
+                        <p>Gambaran Website Pembelajaran Anatomy tubuh manusia yang dirancang untuk para pelajar agar lebih mudah memahami tentang Anatomy.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Modul</span>
+                            <span class="project-tag">3D</span>
+                            <span class="project-tag">Video</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cfb94b29-8892-4a84-8e03-32b7f2fef124.png" alt="Task management application with kanban board view" class="project-image">
+                    <div class="project-details">
+                        <h3>Project Management</h3>
+                        <p>Team collaboration tool with task boards and progress tracking.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Angular</span>
+                            <span class="project-tag">NestJS</span>
+                            <span class="project-tag">MySQL</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5fbfde03-c1e9-4102-b73d-fc4167eefb75.png" alt="Weather application showing current conditions and forecast" class="project-image">
+                    <div class="project-details">
+                        <h3>Weather App</h3>
+                        <p>Real-time weather information with location-based forecasts.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">API</span>
+                            <span class="project-tag">CSS</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/92ee3c69-2a75-4334-be28-71f0e955c1f6.png" alt="Recipe website with featured dishes and search functionality" class="project-image">
+                    <div class="project-details">
+                        <h3>Recipe Finder</h3>
+                        <p>Culinary platform with thousands of recipes and nutritional information.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">PHP</span>
+                            <span class="project-tag">Laravel</span>
+                            <span class="project-tag">Redis</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3d22e480-d7e1-4c53-ab2f-48066c99aa43.png" alt="Fitness tracking application with workout plans and progress charts" class="project-image">
+                    <div class="project-details">
+                        <h3>Fitness Tracker</h3>
+                        <p>Mobile-friendly workout companion with exercise library and progress analytics.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React Native</span>
+                            <span class="project-tag">Redux</span>
+                            <span class="project-tag">AWS</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b53eb26f-f948-436c-b874-31133000f01f.png" alt="Online learning platform with course categories and video player" class="project-image">
+                    <div class="project-details">
+                        <h3>E-Learning Platform</h3>
+                        <p>Educational website with course management and video streaming.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Django</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Docker</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3072e583-7496-4c08-b2c4-1e63d2981667.png" alt="Hospital management system interface with patient records dashboard" class="project-image">
+                    <div class="project-details">
+                        <h3>Healthcare System</h3>
+                        <p>Secure platform for managing patient records and appointments.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Java</span>
+                            <span class="project-tag">Spring Boot</span>
+                            <span class="project-tag">Oracle</span>
+                        </div>
+                        <a href="#" class="project-link">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 MyProject. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            // Toggle menu dan animasi X
+            hamburger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('open');
+            });
+
+            // Klik link nav -> tutup menu
+            document.querySelectorAll('.nav-links a, .btn-portfolio').forEach(link => {
+                link.addEventListener('click', function () {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('open');
+                });
+            });
+
+            // Klik luar area -> tutup menu
+            document.addEventListener('click', function (e) {
+                const isClickInsideMenu = navLinks.contains(e.target);
+                const isClickOnHamburger = hamburger.contains(e.target);
+
+                if (!isClickInsideMenu && !isClickOnHamburger) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
